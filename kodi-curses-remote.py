@@ -117,7 +117,7 @@ def main():
                 typedText = typedText + chr(event)
                 sendCharacter(ip, httpport, typedText, screen)
             
-            readKodiCurrentState(nbCols, screen, httpport)
+            readKodiCurrentState(nbCols, screen, httpport, ip)
 
 
 
