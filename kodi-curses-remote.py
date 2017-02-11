@@ -94,6 +94,7 @@ def main():
 
     try:
         typedText = ""
+        readKodiCurrentState(nbCols, screen, httpport, ip)
         while True: 
             event = screen.getch() 
             #screen.addstr(0, 0, str(event)+ "    ")
@@ -116,12 +117,7 @@ def main():
                 typedText = typedText + chr(event)
                 sendCharacter(ip, httpport, typedText, screen)
             
-            time.sleep(0.3)
-            r = requests.post("http://" + ip + ":" + str(httpport)+"/jsonrpc", data='{ "jsonrpc": "2.0", "method": "GUI.GetProperties", "params": { "properties" : ["currentwindow","currentcontrol"] }, "id": 1 }')
-            js = json.loads(r.text)
-            screen.addstr(1,0, js["result"]["currentwindow"]["label"].ljust(nbCols))
-            screen.addstr(2,0, " ".ljust(nbCols),curses.A_UNDERLINE)
-            screen.addstr(3,0, js["result"]["currentcontrol"]["label"].ljust(nbCols))
+            readKodiCurrentState(nbCols, screen, httpport)
 
 
 
@@ -132,7 +128,14 @@ def main():
         curses.endwin()
         sock.close()
 
-     
+def readKodiCurrentState(nbCols, screen, httpport, ip):
+	time.sleep(0.3)
+	r = requests.post("http://" + ip + ":" + str(httpport)+"/jsonrpc", data='{ "jsonrpc": "2.0", "method": "GUI.GetProperties", "params": { "properties" : ["currentwindow","currentcontrol"] }, "id": 1 }')
+	js = json.loads(r.text)
+	screen.addstr(1,0, js["result"]["currentwindow"]["label"].ljust(nbCols))
+	screen.addstr(2,0, " ".ljust(nbCols),curses.A_UNDERLINE)
+	screen.addstr(3,0, js["result"]["currentcontrol"]["label"].ljust(nbCols))
+
 def sendAction(sock, addr, action, screen):
 	#screen.addstr(1, 0, action+"              ")
 	#screen.refresh()
