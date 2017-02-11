@@ -19,3 +19,6 @@ Following keys are supported:
  - backspace : backspace
  - space bar :  space
 
+#Usage
+
+`kodi-curses-remote.py --host=kodi-host --port=eventserver-port --httpport=jsonrpc-port`

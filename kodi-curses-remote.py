@@ -50,9 +50,9 @@ except:
     from xbmcclient import *
 
 def usage():
-    print "kodi-python-remote --host=XXX --port=XXXX"
+    print "kodi-python-remote --host=XXX --port=XXX --httpport=XXX"
     print 'Example'
-    print '\tkodi-python-remote --host=192.168.0.1 --port=9777'
+    print '\tkodi-python-remote --host=192.168.0.1 --port=9777 --httpport=8080'
     pass
 
 def main():
